@@ -31,15 +31,16 @@ class Twilio implements Driver
      * Returns the details about the phone number.
      *
      * @param string $phone
+     * @param array  $options
      * @return \EllisIO\Phone\Phone
      * @throws \EllisIO\Phone\Exceptions\InvalidPhoneException
      */
-    public function getPhone(string $phone)
+    public function getPhone(string $phone, array $options = array())
     {
         try {
             $lookup = $this->twilio->lookups
                 ->phoneNumbers($phone)
-                ->fetch();
+                ->fetch($options);
 
             return new Phone($lookup->phoneNumber, $lookup->nationalFormat, $lookup->countryCode);
         } catch (RestException $e) {
